@@ -1,0 +1,11 @@
+{
+	// The number of blocks a player with physics disabled must be from a physics event for it to be cancelled
+	"distance": 6,
+
+	// Whether block fade events should always be cancelled, regardless of players' physics settings
+	// For example, coral dying, ice or snow melting, or fire burning out
+	"preventBlockFades": false,
+
+	// Remind players they are disabling physics
+	"actionbarReminder": true
+}

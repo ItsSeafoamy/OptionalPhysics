@@ -1,0 +1,5 @@
+{
+	"enabled": "Physics have been enabled.",
+	"disabled": "Physics have been disabled.",
+	"actionbar": "Currently ignoring physics"
+}

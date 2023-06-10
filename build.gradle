@@ -1,0 +1,63 @@
+plugins {
+    id 'java'
+    id 'org.hidetake.ssh' version '2.11.2'
+}
+
+group 'me.seafoam.minecraft'
+version '1.0-SNAPSHOT'
+
+compileJava.options.encoding = "UTF-8"
+
+configurations {
+    implementationResolvable {
+        extendsFrom implementation
+        canBeResolved true
+    }
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/main/java']
+        }
+        compileClasspath += configurations.implementationResolvable
+        runtimeClasspath += configurations.implementationResolvable
+    }
+}
+
+repositories {
+    mavenCentral()
+    jcenter()
+    maven {url 'https://repo.papermc.io/repository/maven-public/'}
+    maven {url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'}
+    maven {url 'https://repo.dmulloy2.net/repository/public/'}
+    maven {url 'https://libraries.minecraft.net/'}
+    maven {url 'https://repo.seafoam.me/'}
+}
+
+dependencies {
+    implementationResolvable 'me.seafoam.minecraft:seafoamy-paper:1.0-SNAPSHOT'
+
+    annotationProcessor 'org.projectlombok:lombok:1.18.24'
+}
+
+remotes {
+    web01 {
+        host = sshHost
+        user = sshUser
+        password = sshPassword
+    }
+}
+
+tasks.register("deployTest") {
+    group = 'all'
+
+    dependsOn 'build'
+    doLast {
+        ssh.run {
+            session(remotes.web01) {
+                put from: "${buildDir}/libs/OptionalPhysics-${version}.jar", into: sshPluginLocation + "/OptionalPhysics.jar"
+            }
+        }
+    }
+}

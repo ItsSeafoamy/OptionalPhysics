@@ -1,0 +1,6 @@
+name: OptionalPhysics
+main: me.seafoam.minecraft.optionalphysics.OptionalPhysics
+version: 1.0
+api-version: 1.19
+author: Seafoam
+depend: [Seafoamy]
